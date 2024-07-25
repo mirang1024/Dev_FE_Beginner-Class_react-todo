@@ -34,6 +34,7 @@ export default function App() {
     // console.log(count);
   }
 
+  // useEffect(콜백, 의존성 배열)
   useEffect(() => {
     getUsers()
   }, [])
