@@ -1,0 +1,11 @@
+{
+  // 세미콜론 안 쓰기
+  "semi": false,
+  // 작은 따옴표
+  "singleQuote": true,
+  "singleAttributePerLine": true,
+  "bracketSameLine": true,
+  "endOfLine": "lf",
+  "trailingComma": "none",
+  "arrowParens": "avoid"
+}
