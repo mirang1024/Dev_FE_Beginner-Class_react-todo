@@ -74,18 +74,24 @@ export default function App() {
     }
   }
 
+  // functioin setTodo(todo) {
+  //   setTodos(todos => {
+  //     cont foundTodo = todos.find(t => t.id === todos.id)
+  //     if (foundTodo) {
+        
+  //     }
+  //   }
+  // }
+
 
   return (
     <>
-      {/* <div>{count}명</div>
-      <button onClick={increase}>증가+</button> */}
-      {/* <div>{loading ? '로딩 중...' : ''}</div> */}
       <div>{loading && <TheLoader />}</div>
       <div>{message}</div>
       <ul>
         {todos.map(todo => (
           <Fragment key={todo.id}>
-            < TodoItem abc={todo} />
+            < TodoItem todo={todo} />
           </Fragment>
         ))}
       </ul>
