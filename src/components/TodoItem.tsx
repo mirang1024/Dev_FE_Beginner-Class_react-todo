@@ -2,7 +2,13 @@ import type { Todo } from '../App'
 import { useState } from 'react'
 
 // abc를 todo로 바꾸기
-export default function UserItem({ todo }: {todo: Todo}) {
+export default function TodoItem({
+  todo,
+  getTodos
+}: {
+  todo: Todo;
+  getTodos: () => void
+}) {
   const [title, setTitle] = useState(todo.title)
 // 키보드 이벤트 타입은 타입이라 따로 안 가져와도 된다 
 // async 추가하기!
@@ -38,6 +44,8 @@ async function updateTodo() {
   console.log(data.title)
   // 화면에 바뀐 결과 반영하기 
   // setTitle(data.title)
+  // 목록을 새로 가져오는 방법2
+  getTodos()
 }
 
 async function deleteTodo() {
@@ -75,19 +83,19 @@ async function deleteTodo() {
   )
 }
 
-// form을 활용한 경우
-return (
-  <li>
-    <form onSubmit={handleSubmit}>
-      {todo.title}
-      <input
-        type="text"
-        defaultValue={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <button type="submit">수정</button>
-    </form>
-  </li>
-)
-// 디폴트 벨류가 잇으면 온체인지로 할 필요가 없다
+// // form을 활용한 경우
+// return (
+//   <li>
+//     <form onSubmit={handleSubmit}>
+//       {todo.title}
+//       <input
+//         type="text"
+//         defaultValue={title}
+//         onChange={(e) => setTitle(e.target.value)}
+//       />
+//       <button type="submit">수정</button>
+//     </form>
+//   </li>
+// )
+// // 디폴트 벨류가 잇으면 온체인지로 할 필요가 없다
 
