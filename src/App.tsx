@@ -73,15 +73,18 @@ export default function App() {
       setLoading(false)
     }
   }
+  
 
-  // functioin setTodo(todo) {
-  //   setTodos(todos => {
-  //     cont foundTodo = todos.find(t => t.id === todos.id)
-  //     if (foundTodo) {
-        
-  //     }
-  //   }
-  // }
+  function setTodo(updatedTodo: Todo) {
+    setTodos((todos) => {
+      return todos.map(todos => {
+        if (todo.id === updtedTodo.id) {
+          return updatedTodo
+        }
+        return todo
+      })
+    })
+  }
 
 
   return (
@@ -93,7 +96,7 @@ export default function App() {
           <Fragment key={todo.id}>
             < TodoItem
             todo={todo}
-            getTodos={getTodos}
+            setTodo={setTodo}
             />
           </Fragment>
         ))}
