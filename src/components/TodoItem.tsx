@@ -63,8 +63,7 @@ async function deleteTodo() {
       },
     }
   )
-  // 가져온 데이터를 확인하는 건 생략해도 된다
-  // const data = await res.json()
+  getTodos()
 }
 
 
