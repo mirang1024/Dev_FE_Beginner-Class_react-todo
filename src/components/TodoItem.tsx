@@ -64,11 +64,11 @@ async function deleteMe() {
         },
       }
     )
+  } catch (error) {
+    console.error('삭제 실패', error)
+    getTodos()
   }
-} catch (error) {
-  console.error('삭제 실패', error)
-  getTodos()
-}
+} 
 
 
   return (
@@ -82,4 +82,5 @@ async function deleteMe() {
       <button onClick={() => deleteMe()}>삭제</button>
     </li>
   )
+}
 }
