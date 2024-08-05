@@ -103,7 +103,6 @@ export default function App() {
             todo={todo}
             setTodo={setTodo}
             deleteTodo={deleteTodo}
-            getTodos={getTodos}
             />
           </Fragment>
         ))}

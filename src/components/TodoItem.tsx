@@ -66,7 +66,9 @@ async function deleteMe() {
     )
   } catch (error) {
     console.error('삭제 실패', error)
-    getTodos()
+    // 에러가 발생하면 삭제한 항목을 다시 복구하는 로직
+    setTodo(todo)
+
   }
 } 
 
