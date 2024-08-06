@@ -22,8 +22,7 @@ export interface Todo {
 
 export default function App() {
   // user 객체 타입만 가능한 배열
-  const [todos, setTodos] = useState<Todos[]>([])
-  const [count, setCount] = useState(31) // 초기값이 있는 경우에는 따로 타입 지정 필요 없다
+  const [todos, setTodos] = useState<Todos>([])
   // 반응형 데이터, 초기값 세팅, 배열 데이터의 구조분해할당
   // [데이터와 데이터를 갱신하는 함수]
   const [message, setMessage] = useState('')
@@ -64,7 +63,7 @@ export default function App() {
       // 에러 클래스의 에러 객체, instanceof는 JS 문법, 타입 가드 필요???
 
       if (error instanceof Error) {
-        const message = '폭발!'
+        const message = '서버 폭발!'
         console.error('에러 발생', message)
         setMessage(message)
       }
@@ -73,16 +72,25 @@ export default function App() {
       setLoading(false)
     }
   }
+  
 
-  // functioin setTodo(todo) {
-  //   setTodos(todos => {
-  //     cont foundTodo = todos.find(t => t.id === todos.id)
-  //     if (foundTodo) {
-        
-  //     }
-  //   }
-  // }
+  function setTodo(updatedTodo: Todo) {
+    setTodos(todos => {
+      return todos.map(todo => {
+        if (todo.id === updatedTodo.id) {
+          return updatedTodo
+        }
+        return todo
+      })
+    })
+  }
 
+  function deleteTodo(todoToDelete: Todo) {
+    setTodos(todos => {
+      // todos에서 삭제할 todo를 제외한 나머지 todos를 반환
+      return todos.filter(todo => todo.id !== todoToDelete.id)
+    })
+  }
 
   return (
     <>
@@ -91,9 +99,10 @@ export default function App() {
       <ul>
         {todos.map(todo => (
           <Fragment key={todo.id}>
-            < TodoItem
+            <TodoItem
             todo={todo}
-            getTodos={getTodos}
+            setTodo={setTodo}
+            deleteTodo={deleteTodo}
             />
           </Fragment>
         ))}

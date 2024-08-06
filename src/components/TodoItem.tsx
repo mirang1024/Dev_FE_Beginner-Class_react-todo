@@ -4,10 +4,12 @@ import { useState } from 'react'
 // abc를 todo로 바꾸기
 export default function TodoItem({
   todo,
-  getTodos
+  setTodo,
+  deleteTodo
 }: {
   todo: Todo;
-  getTodos: () => void
+  setTodo: (updatedTodo: Todo) => void
+  deleteTodo: (todoToDelete: Todo) => void
 }) {
   const [title, setTitle] = useState(todo.title)
 // 키보드 이벤트 타입은 타입이라 따로 안 가져와도 된다 
@@ -20,18 +22,23 @@ async function keydownHandler(event : React.KeyboardEvent<HTMLInputElement>) {
 
 // 생서하는 추상화 함수 만들기
 async function updateTodo() {
+  // 낙관적 업데이트 수정된 내용 바로 바꾸고 나중에 가져오는
+  setTodo({ ...todo, title })
   console.log('서버로 전송!', title)
-  const res = await fetch(
+  
+  try {
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    const res = await fetch(
     // 수정할 값(id)를 엔드포인트에 명시해줘야한다. 또한 템플릿 문자열로 수정해야한다.
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/${todo.id}`,
-    {
-      // 수정할 메소드 추가
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-        apikey: '5X8Z1k7M2vU5Q',
-        //  username: 'Grepp_KDT4_ParkYoungWoong'
-        username: 'Grepp_KDT4_ParkYoungWoong'
+      `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${todo.id}`,
+      {
+        // 수정할 메소드 추가
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+          apikey: '5X8Z1k7M2vU5Q',
+          //  username: 'Grepp_KDT4_ParkYoungWoong'
+          username: 'Grepp_KDT4_ParkYoungWoong'
       },
       body: JSON.stringify({
         title,
@@ -39,16 +46,20 @@ async function updateTodo() {
       })
     }
   )
-  const data = await res.json()
+  // 수정한 객체가 데이터로 들어옴
+  const updatedTodo: Todo = await res.json()
   // 바뀐 결과 보기
-  console.log(data.title)
-  // 화면에 바뀐 결과 반영하기 
-  // setTitle(data.title)
-  // 목록을 새로 가져오는 방법2
-  getTodos()
+  console.log(updatedTodo, title)
+} catch (error) {
+  console.error(error)
+  setTodo(todo)
+}
+  // 수정된 데이터 가져온 후 반영
+  // setTodo({updatedTodo})
 }
 
-async function deleteTodo() {
+async function deleteMe() {
+  console.log('deleteMe!!')
   await fetch(
     // 수정할 값(id)를 엔드포인트에 명시해줘야한다. 또한 템플릿 문자열로 수정해야한다.
     `https://asia-northeast3-heropy-api.cloudfunctions.net/api/${todo.id}`,
@@ -64,21 +75,20 @@ async function deleteTodo() {
     }
   )
   // 가져온 데이터를 확인하는 건 생략해도 된다
-  // const data = await res.json()
+  // const updatedData = await res.json()
+  deleteTodo(todo)
 }
 
 
   return (
     <li>
       {todo.title}
-      {/* 타입속성은 기본 값이 생략 가능 */}
       <input
         value={title}
-        // defaultValue={todo.name}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
           onKeyDown={keydownHandler}
       />
-      <button onClick={deleteTodo}>삭제</button>
+      <button onClick={() => deleteMe()}>삭제</button>
     </li>
   )
 }
