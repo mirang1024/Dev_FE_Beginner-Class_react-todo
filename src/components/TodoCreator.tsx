@@ -14,7 +14,6 @@ export default function TodoCreator({ getTodos }: { getTodos: () => void }) {
     await fetch( 
       `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos`,
       {
-        // 수정할 메소드 추가
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -26,9 +25,6 @@ export default function TodoCreator({ getTodos }: { getTodos: () => void }) {
       })
     }
   )
-  // const newTodo: Todo = await res.json()
-  // 새로 작성된 항목만 추가하는 로직
-  // todos.splice(0, 0, newTodo)
   getTodos()
 }
 
@@ -36,7 +32,6 @@ export default function TodoCreator({ getTodos }: { getTodos: () => void }) {
     <div>
       <input
         value={title}
-        // 이것을 통해 양방향으로 
         onChange={e => setTitle(e.target.value)}
         onKeyDown={onKeyDown}
         placeholder="새로운 할 일을 작성하세요~"
