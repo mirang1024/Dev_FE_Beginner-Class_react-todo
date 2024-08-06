@@ -36,9 +36,8 @@ async function updateTodo() {
         method: 'PUT',
         headers: {
           'content-type': 'application/json',
-          apikey: '5X8Z1k7M2vU5Q',
-          //  username: 'Grepp_KDT4_ParkYoungWoong'
-          username: 'Grepp_KDT4_ParkYoungWoong'
+          apikey: 'KDT9_AHMq2s7n',
+          username: 'FE1_ChoiMiRang'
       },
       body: JSON.stringify({
         title,
@@ -62,15 +61,14 @@ async function deleteMe() {
   console.log('deleteMe!!')
   await fetch(
     // 수정할 값(id)를 엔드포인트에 명시해줘야한다. 또한 템플릿 문자열로 수정해야한다.
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/${todo.id}`,
+    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${todo.id}`,
     {
       // 수정할 메소드 추가
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
-        apikey: '5X8Z1k7M2vU5Q',
-        //  username: 'Grepp_KDT4_ParkYoungWoong'
-        username: 'Grepp_KDT4_ParkYoungWoong'
+        apikey: 'KDT9_AHMq2s7n',
+        username: 'FE1_ChoiMiRang'
       },
     }
   )
@@ -88,7 +86,7 @@ async function deleteMe() {
         onChange={e => setTitle(e.target.value)}
           onKeyDown={keydownHandler}
       />
-      <button onClick={() => deleteMe()}>삭제</button>
+      <button onClick={deleteMe}>삭제</button>
     </li>
   )
 }
