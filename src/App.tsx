@@ -2,6 +2,7 @@
 import { useState, useEffect, Fragment } from 'react'
 import TheLoader from './components/TheLoader'
 import TodoItem from './components/TodoItem'
+import TodoCreator from './components/TodoCreator'
 
 // interface ResponseValue {
 //   total: number
@@ -50,9 +51,8 @@ export default function App() {
         {
           headers: {
             'content-type': 'application/json',
-            apikey: '5X8Z1k7M2vU5Q',
-            //  username: 'Grepp_KDT4_ParkYoungWoong'
-            username: 'Grepp_KDT4_ParkYoungWoong'
+            apikey: 'KDT9_AHMq2s7n',
+            username: 'FE1_ChoiMiRang'
           }
         }
       )
@@ -94,19 +94,20 @@ export default function App() {
 
   return (
     <>
-      <div>{loading && <TheLoader />}</div>
-      <div>{message}</div>
-      <ul>
-        {todos.map(todo => (
-          <Fragment key={todo.id}>
-            <TodoItem
-            todo={todo}
-            setTodo={setTodo}
-            deleteTodo={deleteTodo}
-            />
-          </Fragment>
-        ))}
-      </ul>
+      <TodoCreator getTodos={getTodos} />
+        <div>{loading && <TheLoader />}</div>
+        <div>{message}</div>
+        <ul>
+          {todos.map(todo => (
+            <Fragment key={todo.id}>
+              <TodoItem
+              todo={todo}
+              setTodo={setTodo}
+              deleteTodo={deleteTodo}
+              />
+            </Fragment>
+          ))}
+        </ul>
     </>
   )
 }
