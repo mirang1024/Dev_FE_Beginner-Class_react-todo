@@ -1,4 +1,5 @@
 import { useState, useEffect, Fragment } from 'react'
+import { Outlet } from 'react-router-dom'
 import TheLoader from '@/components/TheLoader'
 import TodoItem from '@/components/TodoItem'
 import TodoCreator from '@/components/TodoCreator'
@@ -87,6 +88,7 @@ export default function App() {
             </Fragment>
           ))}
         </ul>
+        <Outlet/>
     </>
   )
 }

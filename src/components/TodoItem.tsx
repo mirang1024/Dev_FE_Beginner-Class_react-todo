@@ -1,5 +1,7 @@
 import type { Todo } from '@/routes/Main'
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
+
 
 export default function TodoItem({
   todo,
@@ -65,7 +67,8 @@ async function deleteMe() {
 
   return (
     <li>
-      {todo.title}
+      {/* a 태그와 href 속성과 같음 */}
+      <Link to={`${todo.id}`}>{todo.title}</Link>
       <input
         value={title}
         onChange={e => setTitle(e.target.value)}
