@@ -3,6 +3,7 @@ import TheLoader from '@/components/TheLoader'
 import TodoItem from '@/components/TodoItem'
 import TodoCreator from '@/components/TodoCreator'
 import { useTodosStore } from '@/stores/todos'
+import { useEffect, Fragment } from 'react';
 
 export default function App() {
   // useTodosStore(function (스토어) { return 스토어.상태 })
