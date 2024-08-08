@@ -1,4 +1,4 @@
-import type { Todo } from '../App'
+import type { Todo } from '@/routes/Main'
 import { useState } from 'react'
 
 export default function TodoItem({

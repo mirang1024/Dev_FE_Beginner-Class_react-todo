@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from 'react'
-import TheLoader from './components/TheLoader'
-import TodoItem from './components/TodoItem'
-import TodoCreator from './components/TodoCreator'
+import TheLoader from '@/components/TheLoader'
+import TodoItem from '@/components/TodoItem'
+import TodoCreator from '@/components/TodoCreator'
 
 
 export type Todos = Todo[]
