@@ -22,8 +22,7 @@ export const useTodosStore = create(
       loading: true,
     }, 
     function (set, get) {
-      return {
-        getTodos: async function() {
+        async function getTodos() {
           try {
             const res = await fetch(
               'https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos',
@@ -54,7 +53,7 @@ export const useTodosStore = create(
               loading: false
             })
           }
-        },
+        }
         // setTodo(updatedTodo: Todo) {
         //   set(({ todos }) => ({
         //     todos: todos.map(todo => {
@@ -72,7 +71,7 @@ export const useTodosStore = create(
         //     }
         //   })
         // },
-        async updateTodo(updatedTodo: Todo) {
+        async function updateTodo(updatedTodo: Todo) {
           try {
             await fetch(
               `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${updatedTodo.id}`,
@@ -89,14 +88,12 @@ export const useTodosStore = create(
               })
             }
           )
-          const state = get()
-          // @ts-ignore-next-line
-          state.getTodos()
+          getTodos()
         } catch (error) {
           console.error(error)
         }
-        },
-        async deleteTodo(deletedTodo: Todo) {
+        }
+        async function deleteTodo(deletedTodo: Todo) {
           await fetch(
             `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${deletedTodo.id}`,
             {
@@ -108,9 +105,12 @@ export const useTodosStore = create(
               },
             }
           )
-          // @ts-ignore
-          await get().getTodos()
+          getTodos()
         }
+      return {
+        getTodos,
+        updateTodo,
+        deleteTodo
       }
     }      
   )
