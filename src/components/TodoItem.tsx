@@ -1,67 +1,27 @@
-import type { Todo } from '@/routes/Main'
+import type { Todo } from '@/stores/todos';
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useTodosStore } from '@/stores/todos';
 
 
-export default function TodoItem({
-  todo,
-  setTodo,
-  deleteTodo
-}: {
-  todo: Todo;
-  setTodo: (updatedTodo: Todo) => void
-  deleteTodo: (todoToDelete: Todo) => void
-}) {
+export default function TodoItem({ todo }: { todo: Todo }) {
   const [title, setTitle] = useState(todo.title)
+  const updateTodo = useTodosStore(state => state.updateTodo)
+  const deleteTodo = useTodosStore(state => state.deleteTodo)
+
+useEffect(() => {
+  setTitle(todo.title)
+  structuredClone(todo.done)
+  // 의존송/종속성 배열, todo객체가 변경될 때 콜백함수 호출
+}, [todo])
+
 async function keydownHandler(event : React.KeyboardEvent<HTMLInputElement>) {
   if (event.key === 'Enter') {
-    updateTodo()
+    updateTodo({
+      ...todo,
+      title
+    })
   }
-}
-
-async function updateTodo() {
-  setTodo({ ...todo, title })
-  console.log('서버로 전송!', title)
-  
-  try {
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    const res = await fetch(
-      `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${todo.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'content-type': 'application/json',
-          apikey: 'KDT9_AHMq2s7n',
-          username: 'FE1_ChoiMiRang'
-      },
-      body: JSON.stringify({
-        title,
-        done: todo.done
-      })
-    }
-  )
-  const updatedTodo: Todo = await res.json()
-  console.log(updatedTodo, title)
-} catch (error) {
-  console.error(error)
-  setTodo(todo)
-}
-}
-
-async function deleteMe() {
-  console.log('deleteMe!!')
-  await fetch(
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${todo.id}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
-        apikey: 'KDT9_AHMq2s7n',
-        username: 'FE1_ChoiMiRang'
-      },
-    }
-  )
-  deleteTodo(todo)
 }
 
 
@@ -72,9 +32,9 @@ async function deleteMe() {
       <input
         value={title}
         onChange={e => setTitle(e.target.value)}
-          onKeyDown={keydownHandler}
+        onKeyDown={keydownHandler}
       />
-      <button onClick={deleteMe}>삭제</button>
+      <button onClick={() => deleteTodo(todo) }>삭제</button>
     </li>
   )
 }

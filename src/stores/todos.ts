@@ -21,7 +21,7 @@ export const useTodosStore = create(
       message: '',
       loading: true,
     }, 
-    function (set) {
+    function (set, get) {
       return {
         getTodos: async function() {
           try {
@@ -54,9 +54,65 @@ export const useTodosStore = create(
               loading: false
             })
           }
+        },
+        // setTodo(updatedTodo: Todo) {
+        //   set(({ todos }) => ({
+        //     todos: todos.map(todo => {
+        //       if (todo.id === updatedTodo.id) {
+        //         return updatedTodo
+        //       }
+        //       return todo
+        //     })
+        //   }))
+        // },
+        // deleteTodo(todoToDelete: Todo) {
+        //   set(({ todos }) => { 
+        //     return {
+        //       todos: todos.filter(todo => todo.id !== todoToDelete.id)
+        //     }
+        //   })
+        // },
+        async updateTodo(updatedTodo: Todo) {
+          try {
+            await fetch(
+              `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${updatedTodo.id}`,
+              {
+                method: 'PUT',
+                headers: {
+                  'content-type': 'application/json',
+                  apikey: 'KDT9_AHMq2s7n',
+                  username: 'FE1_ChoiMiRang'
+              },
+              body: JSON.stringify({
+                title: updatedTodo.title,
+                done: updatedTodo.done
+              })
+            }
+          )
+          const state = get()
+          // @ts-ignore-next-line
+          state.getTodos()
+        } catch (error) {
+          console.error(error)
+        }
+        },
+        async deleteTodo(deletedTodo: Todo) {
+          await fetch(
+            `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/${deletedTodo.id}`,
+            {
+              method: 'DELETE',
+              headers: {
+                'content-type': 'application/json',
+                apikey: 'KDT9_AHMq2s7n',
+                username: 'FE1_ChoiMiRang'
+              },
+            }
+          )
+          // @ts-ignore
+          await get().getTodos()
         }
       }
-    }
+    }      
   )
 )
 

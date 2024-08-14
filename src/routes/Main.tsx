@@ -16,23 +16,6 @@ export default function App() {
     getTodos()
   }, [])
 
-  function setTodo(updatedTodo: Todo) {
-    // setTodos(todos => {
-    //   return todos.map(todo => {
-    //     if (todo.id === updatedTodo.id) {
-    //       return updatedTodo
-    //     }
-    //     return todo
-    //   })
-    // })
-  }
-
-  function deleteTodo(todoToDelete: Todo) {
-    // setTodos(todos => {
-    //   return todos.filter(todo => todo.id !== todoToDelete.id)
-    // })
-  }
-
   return (
     <>
       <TodoCreator getTodos={getTodos} />
@@ -43,8 +26,6 @@ export default function App() {
             <Fragment key={todo.id}>
               <TodoItem
               todo={todo}
-              setTodo={setTodo}
-              deleteTodo={deleteTodo}
               />
             </Fragment>
           ))}
