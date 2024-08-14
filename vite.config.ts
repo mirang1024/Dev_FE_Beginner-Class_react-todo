@@ -9,5 +9,10 @@ export default defineConfig({
       { find: '@', replacement: '/src' },
       { find: 'node_modules', replacement: '/node_modules' }
     ]
+  },
+  server: {
+    proxy: {
+      '/api': { target: 'http://localhost:3000' }
+    }
   }
 })
