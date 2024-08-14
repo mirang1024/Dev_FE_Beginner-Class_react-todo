@@ -12,9 +12,8 @@ export default function TodoItemModal() {
   const updateTodo = useTodosStore(state => state.updateTodo)
   const deleteTodo = useTodosStore(state => state.deleteTodo)
   const currentTodo = todos.find(todo => todo.id === todoId)
-  const {title, setTitle} = useState(currentTodo?.title || '')
-  const {done, setDone} = useState(currentTodo?.done || false)
-
+  const [ title, setTitle ] = useState(currentTodo?.title || '')
+  const [ done, setDone ] = useState(currentTodo?.done || false)
 
   function offModal() {
     navigate('/')
@@ -38,7 +37,6 @@ export default function TodoItemModal() {
 
   return (
     <div className={styles.modal}>
-      {/* 모달 창 밖을 클릭하면 모달창이 꺼진다는 추상화를 해서 ui를 바로 보고 이해할 수 있다 */}
       <div
       className={styles.overlay}
       onClick={offModal}></div>
