@@ -27,7 +27,6 @@ async function keydownHandler(event : React.KeyboardEvent<HTMLInputElement>) {
 
   return (
     <li>
-      {/* a 태그와 href 속성과 같음 */}
       <Link to={`${todo.id}`}>{todo.title}</Link>
       <input
         value={title}

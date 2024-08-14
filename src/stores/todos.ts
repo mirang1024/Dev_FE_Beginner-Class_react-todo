@@ -21,7 +21,7 @@ export const useTodosStore = create(
       message: '',
       loading: true,
     }, 
-    function (set, get) {
+    function (set) {
         async function getTodos() {
           try {
             const res = await fetch(
